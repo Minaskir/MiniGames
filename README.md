@@ -3,15 +3,17 @@
 ## Требования для игры:
 
 1. Создать виртуальную среду, используя
-    
+    ```
     python3 -m venv venv
+   ```
 2. Установить pygame, используя pip:
-
+    ```
     pip install pygame
+    ```
 3. Установить pygame-gui, используя pip:
-
+    ```
     pip install pygame-gui
-
+    ```
 
 ## Как запускать игру:
 
@@ -20,9 +22,9 @@
    https://github.com/Minaskir/MiniGames.git
 
 2. Запустите игру:
-
+    ```
    py main.py
-
+    ```
 # Демонстрация
 
 1. Аэрохоккей
