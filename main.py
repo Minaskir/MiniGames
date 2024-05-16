@@ -38,9 +38,42 @@ TicTacToe.set_view((WIDTH - TicTacToe.width * TTT_CELL_SIZE) // 2,
 # Также игра должна иметь методы render() и restart()
 # Обработку действий в игре можно написать в ф-ии play_game(), если игра статичная
 # Если игра требует частых обновлений и проверок, то лучше написать в основной игровой цикл
+class InfoScreen:
+    def __init__(self, screen):
+        self.screen = screen
+        self.font = pygame.font.Font(None, 36)
+        self.caption = "Information"
+        self.info_text = [
+            "MiniGames",
+            "Проект включает в себя 3 игры для двух игроков",
+            "на одном экране: аэрохоккей, морской бой, крестики-нолики",
+            "Управление в аэрохоккей: WASD - для первого игрока, стрелочки - для второго игрока",
+            "Управление в морской бой и крестики-нолики: левой кнопкой мыши",
+            "Нажмите SPACE для перезапуска игры",
+            "Авторы:",
+            "Севрюков Кирилл Евгеньевич, Климачев Сергей Александрович"
+        ]
+        # Цвета текста и фона
+        self.text_color = (0, 0, 0)  # черный
+        self.background_color = (255, 255, 255)  # белый
+
+    def render(self):
+        self.screen.fill(self.background_color)
+        text_y = 100
+        for line in self.info_text:
+            text_surface = self.font.render(line, True, self.text_color)
+            text_rect = text_surface.get_rect(center=(WIDTH // 2, text_y))
+            self.screen.blit(text_surface, text_rect)
+            text_y += 40
+
+    def restart(self):
+        pass  # Нет необходимости перезапускать информационный экран
+# Обновленный словарь с добавленным InfoScreen
 games_dict = {'Air Hockey (Аэрохоккей)': AH,
               'Sea Battle (Морской Бой)': SB,
-              'Tic Tac Toe (Крестики-нолики)': TicTacToe}
+              'Tic Tac Toe (Крестики-нолики)': TicTacToe,
+              'О программе': InfoScreen(screen)}
+
 game_changer = pygame_gui.elements.ui_drop_down_menu.UIDropDownMenu(
     options_list=list(games_dict.keys()),
     starting_option='Air Hockey (Аэрохоккей)',

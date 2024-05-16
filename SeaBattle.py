@@ -160,6 +160,9 @@ class SeaBattleBoard(Board):
             self.active = False
             self.caption = 'Морской Бой (игра не активна)'
 
+        self.current_player = 1
+        self.next_player = 1
+
     def render(self):
         """Прорисовка поля для игры"""
         if self.cooldown:
@@ -167,6 +170,7 @@ class SeaBattleBoard(Board):
             if not self.cooldown:
                 self.board = self.p1 if self.board == self.p2 else self.p2
                 self.map = self.p1_ship_map if self.map == self.p2_ship_map else self.p2_ship_map
+                self.current_player = self.next_player
         self.screen.fill((255, 255, 255))
         self.screen.blit(SeaBattleBoard.background, (0, 0))
         y = self.top
@@ -198,6 +202,11 @@ class SeaBattleBoard(Board):
             c += 1
             y += self.cell_size
 
+                # Отображение надписи о текущем ходе игрока
+            player_text = self.font.render(f"Ход игрока {self.current_player}", True, SB_FONT_COLOR)
+            player_text_rect = player_text.get_rect(centerx=self.screen.get_width() // 2, y=10)
+            self.screen.blit(player_text, player_text_rect)
+
     def on_click(self, cell):
         """Совершает действие по нажатию кнопки мыши пользователем"""
         if cell and not self.cooldown and not self.won and self.active:
@@ -207,6 +216,8 @@ class SeaBattleBoard(Board):
                 pygame.mixer.Sound.play(SeaBattleBoard.miss_sound)
                 self.board[y][x] = '@'
                 self.cooldown = SB_CD_LENGTH
+                self.next_player = 2 if self.current_player == 1 else 1
+
             elif self.board[y][x] == '#':
                 pygame.mixer.Sound.play(SeaBattleBoard.explosion_sound)
                 self.board[y][x] = '+'
@@ -258,3 +269,4 @@ class SeaBattleBoard(Board):
         if any([self.p1_is_empty, self.p2_is_empty]):
             self.active = False
             self.caption = 'Морской Бой (игра не активна)'
+        self.current_player =1
