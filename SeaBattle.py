@@ -211,7 +211,7 @@ class SeaBattleBoard(Board):
         """Совершает действие по нажатию кнопки мыши пользователем"""
         if cell and not self.cooldown and not self.won and self.active:
             x, y = cell
-            # Если игрок промахивается, то ход передается следующему после "перезарядки"
+            # Если игрок промахивается, то ход передается следующему после "перезарядки
             if self.board[y][x] == '.':
                 pygame.mixer.Sound.play(SeaBattleBoard.miss_sound)
                 self.board[y][x] = '@'
